@@ -219,15 +219,15 @@ export default function TrainingScreen() {
                             <div className="space-y-2 bg-slate-100 p-4 rounded-xl text-slate-900">
                                 <div className="flex justify-between text-sm">
                                     <span className="font-bold text-green-700">Raise</span>
-                                    <span>{(feedback.frequencies?.raise * 100 ?? 0).toFixed(1)}%</span>
+                                    <span>{((feedback.frequencies?.raise || 0) * 100).toFixed(1)}%</span>
                                 </div>
                                 <div className="flex justify-between text-sm">
                                     <span className="font-bold text-blue-700">Call (Limp)</span>
-                                    <span>{(feedback.frequencies?.call * 100 ?? 0).toFixed(1)}%</span>
+                                    <span>{((feedback.frequencies?.call || 0) * 100).toFixed(1)}%</span>
                                 </div>
                                 <div className="flex justify-between text-sm">
                                     <span className="font-bold text-slate-700">Fold</span>
-                                    <span>{(feedback.frequencies?.fold * 100 ?? 0).toFixed(1)}%</span>
+                                    <span>{((feedback.frequencies?.fold || 0) * 100).toFixed(1)}%</span>
                                 </div>
                             </div>
 
