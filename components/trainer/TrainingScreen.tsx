@@ -41,6 +41,9 @@ function parseHandToCards(handStr: string): [string, string] {
     return [`${r1}${s1}`, `${r2}${s2}`];
 }
 
+// Helper for safe frequency display (avoids Vercel build errors with ??)
+const formatPct = (v?: number) => ((v ?? 0) * 100).toFixed(1);
+
 export default function TrainingScreen() {
     const { loading, currentHand, feedback, stats, handleAction, nextHand } = useTrainer();
     const [cards, setCards] = React.useState<[string, string]>(["??", "??"]);
@@ -217,25 +220,20 @@ export default function TrainingScreen() {
                             </div>
 
                             {/* Helper for safe frequency display */}
-                            {(() => {
-                                const pct = (v?: number) => ((v ?? 0) * 100).toFixed(1);
-                                return (
-                                    <div className="space-y-2 bg-slate-100 p-4 rounded-xl text-slate-900">
-                                        <div className="flex justify-between text-sm">
-                                            <span className="font-bold text-green-700">Raise</span>
-                                            <span>{pct(feedback.frequencies?.raise)}%</span>
-                                        </div>
-                                        <div className="flex justify-between text-sm">
-                                            <span className="font-bold text-blue-700">Call (Limp)</span>
-                                            <span>{pct(feedback.frequencies?.call)}%</span>
-                                        </div>
-                                        <div className="flex justify-between text-sm">
-                                            <span className="font-bold text-slate-700">Fold</span>
-                                            <span>{pct(feedback.frequencies?.fold)}%</span>
-                                        </div>
-                                    </div>
-                                );
-                            })()}
+                            <div className="space-y-2 bg-slate-100 p-4 rounded-xl text-slate-900">
+                                <div className="flex justify-between text-sm">
+                                    <span className="font-bold text-green-700">Raise</span>
+                                    <span>{formatPct(feedback.frequencies?.raise)}%</span>
+                                </div>
+                                <div className="flex justify-between text-sm">
+                                    <span className="font-bold text-blue-700">Call (Limp)</span>
+                                    <span>{formatPct(feedback.frequencies?.call)}%</span>
+                                </div>
+                                <div className="flex justify-between text-sm">
+                                    <span className="font-bold text-slate-700">Fold</span>
+                                    <span>{formatPct(feedback.frequencies?.fold)}%</span>
+                                </div>
+                            </div>
 
                             {feedback.boundaryScore > 0.3 && (
                                 <div className="mt-4 inline-block bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-bold border border-yellow-200">
